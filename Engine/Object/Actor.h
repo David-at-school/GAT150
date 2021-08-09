@@ -6,19 +6,20 @@
 
 namespace ds
 {
-	class Shape;
 	class Scene;
+	class Texture;
+	class Renderer;
 
 	class Actor : public  Object
 	{
 	public:
 		Actor() {}
-		Actor(const Transform& transform, std::shared_ptr<Shape> shape = {}) : transform{ transform }, shape{ shape } {}
+		Actor(const Transform& transform, std::shared_ptr<Texture> texture = {}) : transform{ transform }, texture{ texture } {}
 
 		virtual void Initialize() {};
 
 		virtual void Update(float dt);
-		virtual void Draw();
+		virtual void Draw(Renderer* renderer);
 
 		virtual void OnCollision(Actor* actor);
 		void AddChild(std::unique_ptr<Actor> actor);
@@ -29,8 +30,9 @@ namespace ds
 		bool destroy{false};
 		std::string tag;
 
+		std::shared_ptr<Texture> texture;
+
 		Transform transform;
-		std::shared_ptr<Shape> shape;
 		Scene* scene{ nullptr};
 
 		Actor* parent{ nullptr };
