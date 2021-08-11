@@ -1,6 +1,7 @@
 #pragma once
 #define NOMINMAX
 #include <iostream>
+#include <SDL.h>
 
 namespace ds
 {
@@ -29,6 +30,17 @@ namespace ds
 			std::uint8_t blue = static_cast<std::uint8_t>(b * 255);
 
 			return (red | green << 8 | blue << 16);
+		}
+
+		operator SDL_Color() const
+		{
+			SDL_Color color;
+			color.r = static_cast<Uint8>(r * 255);
+			color.g = static_cast<Uint8>(g * 255);
+			color.b = static_cast<Uint8>(b * 255);
+			color.a = 255;
+
+			return color;
 		}
 
 		friend std::istream& operator >> (std::istream& stream, Color& v);

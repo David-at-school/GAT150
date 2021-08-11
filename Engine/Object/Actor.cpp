@@ -8,8 +8,8 @@ namespace ds
 {
 	void Actor::Update(float dt)
 	{
-		transform.rotation += 180.0f * dt;
-		transform.position.x += 100.0f * dt;
+		transform.rotation += 45.0f * dt;
+		transform.position.x += 25.0f * dt;
 		transform.position.x = Wrap(transform.position.x, 0.0f, 800.0f);
 		transform.position.y = Wrap(transform.position.y, 0.0f, 600.0f);
 

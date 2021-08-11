@@ -1,6 +1,7 @@
 #include "Renderer.h"
 #include <SDL_image.h>
 #include <iostream>
+#include <SDL_ttf.h>
 
 void ds::Renderer::Startup()
 {
@@ -10,11 +11,13 @@ void ds::Renderer::Startup()
 	}
 
 	IMG_Init(IMG_INIT_PNG);
+	TTF_Init();
 }
 
 void ds::Renderer::Shutdown()
 {
 	IMG_Quit();
+	TTF_Quit();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 }

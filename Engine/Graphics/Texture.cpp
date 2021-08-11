@@ -5,6 +5,11 @@
 
 namespace ds
 {
+	Texture::Texture(Renderer* renderer)
+	{
+		this->renderer = renderer->renderer;
+	}
+
 	bool Texture::Load(const std::string& name, void* data)
 	{
 		renderer = static_cast<Renderer*>(data)->renderer;
@@ -27,6 +32,22 @@ namespace ds
 			std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
 			return false;
 		}
+
+		return true;
+	}
+
+	bool Texture::Create(SDL_Surface* surface)
+	{
+		// create texture
+		texture = SDL_CreateTextureFromSurface(renderer, surface);
+		SDL_FreeSurface(surface);
+		if (texture == nullptr)
+		{
+			std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
+			return false;
+		}
+
+
 
 		return true;
 	}

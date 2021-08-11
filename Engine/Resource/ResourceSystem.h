@@ -18,6 +18,8 @@ namespace ds
 		template<typename T>
 		std::shared_ptr<T> Get(const std::string& name, void* data = nullptr);
 
+		void Add(const std::string& name, std::shared_ptr<ds::Resource> resource);
+
 	private:
 		std::map<std::string, std::shared_ptr<Resource>> resources;
 	};
@@ -37,5 +39,10 @@ namespace ds
 			resources[name] = resource;
 			return resource;
 		}
+	}
+
+	inline void ResourceSystem::Add(const std::string& name, std::shared_ptr<ds::Resource> resource)
+	{
+		resources[name] = resource;
 	}
 }
