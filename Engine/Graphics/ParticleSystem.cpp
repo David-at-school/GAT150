@@ -63,7 +63,7 @@ namespace ds
 		}
 	}
 
-	void ParticleSystem::Create(const Vector2& position, size_t count, float lifetime, float speed, float angle, float angleRange)
+	void ParticleSystem::Create(const Vector2& position, size_t count, float lifetime, std::shared_ptr<Texture> texture, float speed, float angle, float angleRange)
 	{
 		for (size_t i = 0; i < count; i++)
 		{
@@ -74,6 +74,7 @@ namespace ds
 				particle->lifetime = lifetime;
 				particle->position = position;
 				particle->prevPosition = position;
+				particle->texture = texture;
 				float randX = RandomRange(-1, 1);
 				float randY = RandomRange(-1, 1);
 				particle->angle = std::atan2(randX, randY);

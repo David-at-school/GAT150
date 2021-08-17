@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Math/MathUtils.h"
 #include <SDL_image.h>
 #include <iostream>
 #include <SDL_ttf.h>
@@ -53,18 +54,28 @@ void ds::Renderer::Draw(std::shared_ptr<ds::Texture> texture, const Vector2& pos
 {
 	Vector2 size = texture->GetSize();
 	size *= scale;
+	Vector2 newPosition = position - (size * 0.5f);
 
-	SDL_Rect dest{ (int)position.x, (int)position.y, (int)size.x, (int)size.y };
+	SDL_Rect rect;
+	rect.x = static_cast<int>(newPosition.x);
+	rect.y = static_cast<int>(newPosition.y);
+	rect.w = static_cast<int>(size.x);
+	rect.h = static_cast<int>(size.y);
 
-	SDL_RenderCopyEx(renderer, texture->texture, NULL, &dest, angle, nullptr, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, texture->texture, NULL, &rect, ds::RadToDeg(angle), nullptr, SDL_FLIP_NONE);
 }
 
 void ds::Renderer::Draw(std::shared_ptr<ds::Texture> texture, const Transform& transform)
 {
 	Vector2 size = texture->GetSize();
 	size *= transform.scale;
+	Vector2 newPosition = transform.position - (size * 0.5f);
 
-	SDL_Rect dest{ (int)transform.position.x, (int)transform.position.y, (int)size.x, (int)size.y };
+	SDL_Rect dest;
+	dest.x = static_cast<int>(newPosition.x);
+	dest.y = static_cast<int>(newPosition.y);
+	dest.w = static_cast<int>(size.x);
+	dest.h = static_cast<int>(size.y);
 
-	SDL_RenderCopyEx(renderer, texture->texture, NULL, &dest, transform.rotation, nullptr, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, texture->texture, NULL, &dest, ds::RadToDeg(transform.rotation), nullptr, SDL_FLIP_NONE);
 }
