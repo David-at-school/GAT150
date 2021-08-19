@@ -11,7 +11,7 @@ void ds::Renderer::Startup()
 		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;	
 	}
 
-	IMG_Init(IMG_INIT_PNG);
+	IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF);
 	TTF_Init();
 }
 
@@ -78,4 +78,19 @@ void ds::Renderer::Draw(std::shared_ptr<ds::Texture> texture, const Transform& t
 	dest.h = static_cast<int>(size.y);
 
 	SDL_RenderCopyEx(renderer, texture->texture, NULL, &dest, ds::RadToDeg(transform.rotation), nullptr, SDL_FLIP_NONE);
+}
+
+void ds::Renderer::Draw(std::shared_ptr<ds::Texture> texture, const SDL_Rect& source, const Transform& transform)
+{
+	Vector2 size{source.w, source.h};
+	size *= transform.scale;
+	Vector2 newPosition = transform.position - (size * 0.5f);
+
+	SDL_Rect dest;
+	dest.x = static_cast<int>(newPosition.x);
+	dest.y = static_cast<int>(newPosition.y);
+	dest.w = static_cast<int>(size.x);
+	dest.h = static_cast<int>(size.y);
+
+	SDL_RenderCopyEx(renderer, texture->texture, &source, &dest, ds::RadToDeg(transform.rotation), nullptr, SDL_FLIP_NONE);
 }

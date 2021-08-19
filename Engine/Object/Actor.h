@@ -1,20 +1,20 @@
 #pragma once
 #include "Object.h"
 #include "Math/Transform.h"
+#include "Component/Component.h"
 #include <memory>
 #include <vector>
 
 namespace ds
 {
 	class Scene;
-	class Texture;
 	class Renderer;
 
 	class Actor : public  Object
 	{
 	public:
 		Actor() {}
-		Actor(const Transform& transform, std::shared_ptr<Texture> texture = {}) : transform{ transform }, texture{ texture } {}
+		Actor(const Transform& transform) : transform{ transform } {}
 
 		virtual void Initialize() {};
 
@@ -26,11 +26,12 @@ namespace ds
 
 		float GetRadius();
 
+		template<class T>
+		T* AddComponent();
+
 	public:
 		bool destroy{false};
 		std::string tag;
-
-		std::shared_ptr<Texture> texture;
 
 		Transform transform;
 		Scene* scene{ nullptr};
@@ -38,9 +39,18 @@ namespace ds
 		Actor* parent{ nullptr };
 		std::vector<std::unique_ptr<Actor>> children;
 
-		float localLeftBound = 0;
-		float localRightBound = 0;
-		float localUpperBound = 0;
-		float localLowerBound = 0;
+		std::vector<std::unique_ptr<Component>> components;
 	};
+
+	template<class T>
+	inline T* Actor::AddComponent()
+	{
+		std::unique_ptr<T> component = std::make_unique<T>();
+		component->owner = this;
+
+		components.push_back(std::move(component));
+
+		return dynamic_cast<T*>(components.back().get());
+	}
+
 }

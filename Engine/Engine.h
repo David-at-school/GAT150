@@ -33,10 +33,15 @@
 #include "Object/Actor.h"
 #include "Object/Scene.h"
 
+#include "Component/SpriteComponent.h"
+#include "Component/SpriteAnimationComponent.h"
+#include "Component/PhysicsComponent.h"
+
 #define NOMINMAX
 #include <vector>
 #include <memory>
 #include <algorithm>
+#include <SDL_image.h>
 
 namespace ds
 {

@@ -16,7 +16,7 @@ namespace ds
 		Matrix33 matrix;
 
 		Transform() {}
-		Transform(const Vector2& position, float rotation, float scale) : position{ position }, rotation{ rotation }, scale{ scale } {}
+		Transform(const Vector2& position, float rotation = 0.0f, float scale = 1.0f) : position{ position }, rotation{ rotation }, scale{ scale } {}
 
 		void Update();
 		void Update(const Matrix33& mx);

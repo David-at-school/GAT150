@@ -22,6 +22,8 @@ namespace ds
 		//load surface
 		//SDL_Surface* surface = SDL_LoadBMP("sf2.bmp");
 		//SDL_Surface* surface = IMG_Load("sf2.png");
+		
+
 		SDL_Surface* surface = IMG_Load(name.c_str());
 		if (surface == nullptr)
 		{
