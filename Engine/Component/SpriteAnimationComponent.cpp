@@ -33,4 +33,20 @@ namespace ds
 			renderer->Draw(texture, rect, owner->transform);
 		}
 	}
+	bool SpriteAnimationComponent::Write(const rapidjson::Value& value) const
+	{
+		return false;
+	}
+	bool SpriteAnimationComponent::Read(const rapidjson::Value& value)
+	{
+
+		std::string textureName;
+		JSON_READ(value, textureName);
+		JSON_READ(value, fps);
+		JSON_READ(value, numFramesX);
+		JSON_READ(value, numFramesY);
+
+		texture = owner->scene->engine->Get<ResourceSystem>()->Get<Texture>(textureName, owner->scene->engine->Get<ds::Renderer>());
+		return true;
+	}
 }

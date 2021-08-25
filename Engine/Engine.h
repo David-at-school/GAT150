@@ -1,11 +1,21 @@
 #pragma once
+
+#define REGISTER_CLASS(CLASS) ds::ObjectFactory::Instance().Register<CLASS>(#CLASS);
+
 //audio
 #include "Audio/AudioSystem.h"
 
 //core
-#include "Core/Utilities.h"
 #include "Core/FileSystem.h"
+#include "Core/Json.h"
+#include "Core/Serializable.h"
 #include "Core/Timer.h"
+#include "Core/Utilities.h"
+
+// framework
+#include "Framework/EventSystem.h"
+#include "Framework/Factory.h"
+#include "Framework/Singleton.h"
 
 // input
 #include "Input/InputSystem.h"
@@ -22,9 +32,6 @@
 #include "Graphics/Texture.h"
 #include "Graphics/Font.h"
 #include "Graphics/ParticleSystem.h"
-
-// framework
-#include "Framework/EventSystem.h"
 
 //resource
 #include "Resource/ResourceSystem.h"
@@ -45,6 +52,8 @@
 
 namespace ds
 {
+	using ObjectFactory = Singleton<Factory<std::string, Object>>;
+
 	class Engine
 	{
 	public:

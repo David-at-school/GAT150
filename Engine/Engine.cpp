@@ -12,6 +12,11 @@ namespace ds
 		systems.push_back(std::make_unique<AudioSystem>());
 
 		std::for_each(systems.begin(), systems.end(), [](auto& system) {system->Startup(); });
+
+		REGISTER_CLASS(Actor);
+		REGISTER_CLASS(SpriteComponent);
+		REGISTER_CLASS(PhysicsComponent);
+		REGISTER_CLASS(SpriteAnimationComponent);
 	}
 
 	void Engine::Shutdown()

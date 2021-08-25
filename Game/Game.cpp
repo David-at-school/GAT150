@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "GameComponent/PlayerComponent.h"
 
 void Game::Initialize()
 {
@@ -20,15 +21,25 @@ void Game::Initialize()
 	ds::SeedRandom(static_cast<unsigned int>(time(nullptr)));
 	ds::SetFilePath("../Resources");
 
+	REGISTER_CLASS(PlayerComponent);
 
-	std::unique_ptr<ds::Actor> actor = std::make_unique <ds::Actor>(ds::Transform{ ds::Vector2{800, 400}, 0, 1 });
-	{
-		ds::SpriteAnimationComponent* component = actor->AddComponent<ds::SpriteAnimationComponent>();
-		component->texture = engine->Get<ds::ResourceSystem>()->Get<ds::Texture>("Images/duck.png", engine->Get<ds::Renderer>());
-		component->fps = 30;
-		component->numFramesX = 5;
-		component->numFramesY = 3;
-	}
+	rapidjson::Document document;
+	bool success = ds::json::Load("scene.txt", document);
+	assert(success);
+
+	scene->Read(document);
+
+	//std::unique_ptr<ds::Actor> actor = std::make_unique <ds::Actor>(ds::Transform{ ds::Vector2{800, 400}, 0, 1 });
+	//{
+	//	auto component = ds::ObjectFactory::Instance().Create<ds::SpriteComponent>("SpriteComponent");
+
+	//	component->texture = engine->Get<ds::ResourceSystem>()->Get<ds::Texture>("Images/duck.png", engine->Get<ds::Renderer>());
+	//	//component->fps = 30;
+	//	//component->numFramesX = 5;
+	//	//component->numFramesY = 3;
+
+	//	actor->AddComponent(std::move(component));
+	//}
 
 	/*std::unique_ptr<ds::Actor> actor = std::make_unique<ds::Actor>(ds::Transform({700,550}, 0.0f, 0.5f));
 	{
@@ -41,7 +52,7 @@ void Game::Initialize()
 
 		component->ApplyForce(ds::Vector2::right * 200);
 	}*/
-	scene->AddActor(std::move(actor));
+	//scene->AddActor(std::move(actor));
 }
 
 void Game::Shutdown()

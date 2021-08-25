@@ -24,3 +24,4 @@ public:
 private:
 	bool quit = false;
 };
+

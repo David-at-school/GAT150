@@ -1,6 +1,7 @@
 #pragma once
 #include "SpriteComponent.h"
 
+
 namespace ds
 {
 	class SpriteAnimationComponent : public SpriteComponent
@@ -8,6 +9,10 @@ namespace ds
 	public:
 		void Update() override;
 		void Draw(Renderer* renderer) override;
+
+		// Inherited via ISerializable
+		virtual bool Write(const rapidjson::Value& value) const override;
+		virtual bool Read(const rapidjson::Value& value) override;
 
 	public:
 		int frame{ 0 };
