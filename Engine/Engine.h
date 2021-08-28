@@ -33,6 +33,9 @@
 #include "Graphics/Font.h"
 #include "Graphics/ParticleSystem.h"
 
+// physics
+#include "Physics/PhysicsSystem.h"
+
 //resource
 #include "Resource/ResourceSystem.h"
 
@@ -40,9 +43,13 @@
 #include "Object/Actor.h"
 #include "Object/Scene.h"
 
+// component
 #include "Component/SpriteComponent.h"
 #include "Component/SpriteAnimationComponent.h"
 #include "Component/PhysicsComponent.h"
+#include "Component/RBPhysicsComponent.h"
+#include "Component/AudioComponent.h"
+#include "Component/TextComponent.h"
 
 #define NOMINMAX
 #include <vector>

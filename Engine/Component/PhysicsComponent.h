@@ -8,7 +8,7 @@ namespace ds
 	{
 	public:
 		void Update() override;
-		void ApplyForce(const Vector2& force) { acceleration += force; };
+		virtual void ApplyForce(const Vector2& force) { acceleration += force; };
 
 		// Inherited via ISerializable
 		virtual bool Write(const rapidjson::Value& value) const override;
@@ -17,7 +17,6 @@ namespace ds
 	public:
 		Vector2 velocity;
 		Vector2 acceleration;
-		Vector2 force;
 		float damping{ 1 };
 	};
 }

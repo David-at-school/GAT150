@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "GameComponent/PlayerComponent.h"
+#include "GameComponent/EnemyComponent.h"
 
 void Game::Initialize()
 {
@@ -13,6 +14,7 @@ void Game::Initialize()
 	}
 
 	engine->Get<ds::Renderer>()->Create("Gat1Fiddy", dm.w, dm.h);
+	//1536x864
 
 	// create scene
 	scene = std::make_unique<ds::Scene>();
@@ -22,6 +24,7 @@ void Game::Initialize()
 	ds::SetFilePath("../Resources");
 
 	REGISTER_CLASS(PlayerComponent);
+	REGISTER_CLASS(EnemyComponent);
 
 	rapidjson::Document document;
 	bool success = ds::json::Load("scene.txt", document);
@@ -29,30 +32,6 @@ void Game::Initialize()
 
 	scene->Read(document);
 
-	//std::unique_ptr<ds::Actor> actor = std::make_unique <ds::Actor>(ds::Transform{ ds::Vector2{800, 400}, 0, 1 });
-	//{
-	//	auto component = ds::ObjectFactory::Instance().Create<ds::SpriteComponent>("SpriteComponent");
-
-	//	component->texture = engine->Get<ds::ResourceSystem>()->Get<ds::Texture>("Images/duck.png", engine->Get<ds::Renderer>());
-	//	//component->fps = 30;
-	//	//component->numFramesX = 5;
-	//	//component->numFramesY = 3;
-
-	//	actor->AddComponent(std::move(component));
-	//}
-
-	/*std::unique_ptr<ds::Actor> actor = std::make_unique<ds::Actor>(ds::Transform({700,550}, 0.0f, 0.5f));
-	{
- 		ds::SpriteComponent* component = actor->AddComponent<ds::SpriteComponent>();
-
-		component->texture = engine->Get<ds::ResourceSystem>()->Get<ds::Texture>("Images/character.png", engine->Get<ds::Renderer>());
-	}
-	{
-		ds::PhysicsComponent* component = actor->AddComponent<ds::PhysicsComponent>();
-
-		component->ApplyForce(ds::Vector2::right * 200);
-	}*/
-	//scene->AddActor(std::move(actor));
 }
 
 void Game::Shutdown()

@@ -17,10 +17,11 @@ namespace ds
 
 	}
 
-	void EventSystem::Subscribe(const std::string& name, function_t function)
+	void EventSystem::Subscribe(const std::string& name, function_t function, Object* receiver)
 	{
 		Observer observer;
 		observer.function = function;
+		observer.receiver = receiver;
 		observers[name].push_back(observer);
 	}
 
@@ -29,7 +30,10 @@ namespace ds
 		auto& eventObservers = observers[e.name];
 		for (auto& observer : eventObservers)
 		{
-			observer.function(e);
+			if (e.receiver == nullptr || e.receiver == observer.receiver)
+			{
+				observer.function(e);
+			}
 		}
 	}
 }

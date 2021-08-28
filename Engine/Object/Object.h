@@ -6,5 +6,7 @@ namespace ds
 	{
 	public:
 		virtual ~Object() {}
+
+		virtual void Create() {}
 	};
 }

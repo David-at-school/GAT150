@@ -29,9 +29,26 @@ namespace ds
 		std::for_each(children.begin(), children.end(), [renderer](auto& child) { child->Draw(renderer); });
 	}
 
-	void Actor::OnCollision(Actor* actor)
+	void Actor::BeginContact(Actor* other)
 	{
+		Event event;
 
+		event.name = "collision_enter";
+		event.data = other;
+		event.receiver = this;
+
+		scene->engine->Get<EventSystem>()->Notify(event);
+	}
+
+	void Actor::EndContact(Actor* other)
+	{
+		Event event;
+
+		event.name = "collision_exit";
+		event.data = other;
+		event.receiver = this;
+
+		scene->engine->Get<EventSystem>()->Notify(event);
 	}
 
 	void Actor::AddChild(std::unique_ptr<Actor> actor)
@@ -39,13 +56,6 @@ namespace ds
 		actor->parent = this;
 
 		children.push_back(std::move(actor));
-	}
-
-	float Actor::GetRadius()
-	{
-		//return std::max(texture->GetSize().x/2, texture->GetSize().y/2);
-
-		return 0;//(texture) ? texture->GetSize().Length() * 0.5f * transform.scale.x : 0;
 	}
 
 	void Actor::AddComponent(std::unique_ptr<Component> component)
@@ -62,6 +72,7 @@ namespace ds
 	bool Actor::Read(const rapidjson::Value& value)
 	{
 		JSON_READ(value, tag);
+		JSON_READ(value, name);
 
 		if (value.HasMember("transform"))
 		{
@@ -74,12 +85,13 @@ namespace ds
 			{
 				std::string type;
 				JSON_READ(componentValue, type);
-
+				
 				auto component = ObjectFactory::Instance().Create<Component>(type);
 				if (component)
 				{
 					component->owner = this;
 					component->Read(componentValue);
+					component->Create();
 					AddComponent(std::move(component));
 				}
 			}

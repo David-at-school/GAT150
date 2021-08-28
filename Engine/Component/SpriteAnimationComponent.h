@@ -1,14 +1,25 @@
 #pragma once
 #include "SpriteComponent.h"
+#include <map>
 
 
 namespace ds
 {
 	class SpriteAnimationComponent : public SpriteComponent
 	{
+	private:
+		struct Sequence
+		{
+			int fps{ 0 };
+			int startFrame{ 0 };
+			int endFrame{ 0 };
+		};
+
 	public:
 		void Update() override;
 		void Draw(Renderer* renderer) override;
+
+		void StartSequence(const std::string& name);
 
 		// Inherited via ISerializable
 		virtual bool Write(const rapidjson::Value& value) const override;
@@ -20,9 +31,15 @@ namespace ds
 		int numFramesX{ 0 };
 		int numFramesY{ 0 };
 
+		int startFrame{ 0 };
+		int endFrame{ 0 };
+
 		float frameTime{ 0.0f };
 		float frameTimer{ 0.0f };
 
 		SDL_Rect rect;
+
+		std::map<std::string, Sequence> sequences;
+		std::string sequenceName;
 	};
 }
