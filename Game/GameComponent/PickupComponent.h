@@ -1,7 +1,7 @@
 #pragma once
 #include "Component/Component.h"
 
-class EnemyComponent : public ds::Component
+class PickupComponent : public ds::Component
 {
 	// Inherited via Component
 	virtual void Update() override;
@@ -9,8 +9,7 @@ class EnemyComponent : public ds::Component
 	virtual bool Read(const rapidjson::Value& value) override;
 
 public:
-	std::unique_ptr<Object> Clone() const { return std::make_unique<EnemyComponent>(*this); }
+	std::unique_ptr<Object> Clone() const { return std::make_unique<PickupComponent>(*this); }
 
-public:
-	float speed{ 0 };
+	virtual ~PickupComponent();
 };

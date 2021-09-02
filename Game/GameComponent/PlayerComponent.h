@@ -17,7 +17,13 @@ class PlayerComponent : public ds::Component
 	virtual bool Read(const rapidjson::Value& value) override;
 
 public:
+	std::unique_ptr<Object> Clone() const { return std::make_unique<PlayerComponent>(*this); }
+
+	virtual ~PlayerComponent();
+
+public:
 	float speed{ 0 };
+	float jump{ 0 };
 
 private:
 	std::list<ds::Actor*> contacts;

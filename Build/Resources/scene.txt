@@ -1,5 +1,27 @@
 {
    "actors":[
+   {
+        "type":"Actor",
+        "name":"Background",
+        "tag":"",
+        "transform":{
+            "position":[
+               768,
+               432
+            ],
+            "rotation":0,
+            "scale":[
+                1.92,
+                1.44
+                ]
+        },
+        "components":[
+            {
+               "type":"SpriteComponent",
+               "textureName":"Images/background.png"
+            }
+        ]
+    },
     {
 		"type":"Actor",
 		"name":"Score",
@@ -19,12 +41,13 @@
 					1,
 					1
 				],
-				"text":"Hello World!"
+				"text":"0000"
 			}
 		]
 	},
     {
         "type":"Actor",
+        "prototype":true,
         "name":"Player",
         "tag":"Player",
         "transform":{
@@ -38,7 +61,8 @@
         "components":[
             {
                 "type":"PlayerComponent",
-                "speed":5
+                "speed":5,
+                "jump":300
             },
             {
             	"type":"AudioComponent",
@@ -78,6 +102,7 @@
             {
                "type":"RBPhysicsComponent",
                "data.isDynamic":true,
+               "data.lockAngle":true,
                "data.density":1,
                "data.restitution":0.5,
                "data.gravityScale":0.75,
@@ -115,6 +140,38 @@
                "data.lockAngle":true,
                "data.restitution":0.1,
                "data.gravityScale":0,
+               "data.size":[32,32]
+            }
+        ]
+    },
+    {
+        "type":"Actor",
+        "name":"coin",
+        "prototype":true,
+        "tag":"Pickup",
+        "transform":{
+            "position":[
+               900,
+               800
+            ],
+            "rotation":0
+        },
+        "components":[
+            {
+                "type":"PickupComponent"
+            },
+            {
+               "type":"SpriteAnimationComponent",
+               "textureName":"Images/coin.png",
+               "fps":8,
+               "numFramesX":8,
+               "numFramesY":1
+            },
+            {
+               "type":"RBPhysicsComponent",
+               "data.isDynamic":true,
+               "data.isSensor":true,
+               "data.lockAngle":true,
                "data.size":[32,32]
             }
         ]
@@ -208,6 +265,90 @@
                "data.isDynamic":false,
                "data.density":1,
                "data.size":[25,1536]
+            }
+        ]
+    },
+    {
+		"type":"Actor",
+        "name":"tile01",
+		"tag":"tile01",
+        "prototype":true,
+		"transform":{
+			"scale":[
+				1,
+				1
+			],
+        "rotation":0
+        },
+        "components":[
+			{
+               "type":"SpriteComponent",
+               "textureName":"Images/tileset2_32x32.png",
+               "rect":[416,128,32,32]
+            },
+            {
+               "type":"RBPhysicsComponent",
+               "data.isDynamic":false,
+               "data.density":1,
+               "data.size":[32,32]
+            }
+        ]
+    },
+    {
+		"type":"Actor",
+        "name":"tile02",
+		"tag":"tile02",
+        "prototype":true,
+		"transform":{
+			"scale":[
+				1,
+				1
+			],
+        "rotation":0
+        },
+        "components":[
+			{
+               "type":"SpriteComponent",
+               "textureName":"Images/tileset2_32x32.png",
+               "rect":[256,160,32,32]
+            },
+            {
+               "type":"RBPhysicsComponent",
+               "data.isDynamic":false,
+               "data.density":1,
+               "data.size":[32,32]
+            }
+        ]
+    },
+    {
+        "type":"Actor",
+        "prototype":true,
+        "name":"brick",
+        "tag":"Brick",
+        "transform":{
+            "position":[
+               32,
+               32
+            ],
+            "rotation":0
+        },
+        "components":[
+            {
+                "type":"BrickComponent"
+            },
+            {
+               "type":"SpriteAnimationComponent",
+               "textureName":"Images/greenbrick.png",
+               "fps":8,
+               "numFramesX":4,
+               "numFramesY":1
+            },
+            {
+               "type":"RBPhysicsComponent",
+               "data.isDynamic":false,
+               "data.isSensor":true,
+               "data.lockAngle":true,
+               "data.size":[32,32]
             }
         ]
     }

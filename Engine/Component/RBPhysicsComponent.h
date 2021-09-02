@@ -6,6 +6,11 @@ namespace ds
 {
 	class RBPhysicsComponent : public PhysicsComponent
 	{
+	public:
+		RBPhysicsComponent() = default;
+		RBPhysicsComponent(const RBPhysicsComponent& other);
+		std::unique_ptr<Object> Clone() const { return std::make_unique<RBPhysicsComponent>(*this); }
+
 		void Update() override;
 		void ApplyForce(const Vector2& force) override;
 
@@ -14,7 +19,11 @@ namespace ds
 		virtual bool Read(const rapidjson::Value& value) override;
 
 	public:
+		virtual ~RBPhysicsComponent();
+
+	public:
 		PhysicsSystem::RigidBodyData data;
+		bool isCircle{ false };
 		b2Body* body{ nullptr };
 	};
 }

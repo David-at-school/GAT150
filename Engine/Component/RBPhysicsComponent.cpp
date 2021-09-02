@@ -3,11 +3,31 @@
 
 namespace ds
 {
+	RBPhysicsComponent::RBPhysicsComponent(const RBPhysicsComponent& other)
+	{
+		data = other.data;
+	}
+
+	RBPhysicsComponent::~RBPhysicsComponent()
+	{
+		if (body)
+		{
+			owner->scene->engine->Get<PhysicsSystem>()->DestroyBody(body);
+		}
+	}
+
 	void RBPhysicsComponent::Update()
 	{
 		if (!body)
 		{
-			body = owner->scene->engine->Get<PhysicsSystem>()->CreateBody(owner->transform.position, owner->transform.rotation, data, owner);
+			if (isCircle)
+			{
+				body = owner->scene->engine->Get<PhysicsSystem>()->CreateBallBody(owner->transform.position, owner->transform.rotation, data, owner);
+			}
+			else
+			{
+				body = owner->scene->engine->Get<PhysicsSystem>()->CreateBody(owner->transform.position, owner->transform.rotation, data, owner);
+			}
 			body->SetGravityScale(data.gravityScale);
 			body->SetLinearDamping(0.5f);
 		}
@@ -40,6 +60,8 @@ namespace ds
 		JSON_READ(value, data.friction);
 		JSON_READ(value, data.restitution);
 		JSON_READ(value, data.gravityScale);
+
+		JSON_READ(value, isCircle);
 
 		return true;
 	}

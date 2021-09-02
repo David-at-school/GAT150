@@ -41,7 +41,7 @@ namespace ds
 
 	void Scene::RemoveActor(Actor* actor)
 	{
-
+		
 	}
 
 	void Scene::RemoveAllActors()
@@ -71,12 +71,24 @@ namespace ds
 				std::string type;
 				JSON_READ(actorValue, type);
 
+				bool prototype = false;
+				JSON_READ(actorValue, prototype);
+
 				auto actor = ObjectFactory::Instance().Create<Actor>(type);
 				if (actor)
 				{
 					actor->scene = this;
 					actor->Read(actorValue);
-					AddActor(std::move(actor));
+
+					if (prototype)
+					{
+						std::string name = actor->name;
+						ObjectFactory::Instance().RegisterPrototype<Actor>(name, std::move(actor));
+					}
+					else
+					{
+						AddActor(std::move(actor));
+					}
 				}
 			}
 		}

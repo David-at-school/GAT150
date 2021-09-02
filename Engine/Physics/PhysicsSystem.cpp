@@ -53,6 +53,34 @@ namespace ds
         return body;
     }
 
+    b2Body* PhysicsSystem::CreateBallBody(const Vector2& position, float angle, const RigidBodyData& data, Actor* actor)
+    {
+        Vector2 worldPosition = ScreenToWorld(position);
+
+        b2BodyDef bodyDef;
+        bodyDef.type = (data.isDynamic) ? b2_dynamicBody : b2_staticBody;
+        bodyDef.position = worldPosition;
+        bodyDef.angle = ds::DegToRad(angle);
+        bodyDef.fixedRotation = data.lockAngle;
+        b2Body* body = world->CreateBody(&bodyDef);
+
+        b2CircleShape shape;
+        Vector2 worldSize = PhysicsSystem::ScreenToWorld(data.size * 0.5f);
+        shape.m_radius = (worldSize.x > worldSize.y) ? worldSize.x : worldSize.y;
+
+        b2FixtureDef fixtureDef;
+        fixtureDef.density = data.density;
+        fixtureDef.friction = data.friction;
+        fixtureDef.restitution = data.restitution;
+        fixtureDef.isSensor = data.isSensor;
+        fixtureDef.shape = &shape;
+        fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(actor);
+
+        body->CreateFixture(&fixtureDef);
+
+        return body;
+    }
+
     void PhysicsSystem::DestroyBody(b2Body* body)
     {
         world->DestroyBody(body);

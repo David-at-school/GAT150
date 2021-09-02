@@ -9,6 +9,8 @@ namespace ds
 	class SpriteComponent : public GraphicsComponent
 	{
 	public:
+		std::unique_ptr<Object> Clone() const { return std::make_unique<SpriteComponent>(*this); }
+
 		void Update() override;
 		void Draw(Renderer* renderer) override;
 
@@ -18,5 +20,8 @@ namespace ds
 		// Inherited via ISerializable
 		virtual bool Write(const rapidjson::Value& value) const override;
 		virtual bool Read(const rapidjson::Value& value) override;
+
+	public:
+		SDL_Rect rect;
 	};
 }

@@ -42,6 +42,7 @@
 //object
 #include "Object/Actor.h"
 #include "Object/Scene.h"
+#include "Object/Tilemap.h"
 
 // component
 #include "Component/SpriteComponent.h"

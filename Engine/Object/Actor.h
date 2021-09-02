@@ -15,6 +15,9 @@ namespace ds
 	class Actor : public  Object, public ISerializable
 	{
 	public:
+		std::unique_ptr<Object> Clone() const { return std::make_unique<Actor>(*this); }
+		Actor(const Actor& other);
+
 		Actor() {}
 		Actor(const Transform& transform) : transform{ transform } {}
 
@@ -39,6 +42,7 @@ namespace ds
 		virtual bool Read(const rapidjson::Value& value) override;
 
 	public:
+		bool active{ true };
 		bool destroy{false};
 		std::string name;
 		std::string tag;

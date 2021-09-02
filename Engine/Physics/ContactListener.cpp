@@ -31,6 +31,5 @@ namespace ds
 			actorA->EndContact(actorB);
 			actorB->EndContact(actorA);
 		}
-
 	}
 }

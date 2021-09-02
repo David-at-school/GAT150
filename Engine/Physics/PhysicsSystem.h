@@ -28,6 +28,7 @@ namespace ds
 		virtual void Update(float dt) override;
 
 		b2Body* CreateBody(const Vector2& position, float angle, const RigidBodyData& data, class Actor* actor = nullptr);
+		b2Body* CreateBallBody(const Vector2& position, float angle, const RigidBodyData& data, class Actor* actor = nullptr);
 		void DestroyBody(b2Body* body);
 
 		static Vector2 WorldToScreen(const Vector2& world)  { return world * pixelsPerUnit; }

@@ -16,6 +16,8 @@ namespace ds
 		};
 
 	public:
+		std::unique_ptr<Object> Clone() const { return std::make_unique<SpriteAnimationComponent>(*this); }
+
 		void Update() override;
 		void Draw(Renderer* renderer) override;
 
@@ -36,8 +38,6 @@ namespace ds
 
 		float frameTime{ 0.0f };
 		float frameTimer{ 0.0f };
-
-		SDL_Rect rect;
 
 		std::map<std::string, Sequence> sequences;
 		std::string sequenceName;
