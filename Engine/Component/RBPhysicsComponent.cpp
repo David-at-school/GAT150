@@ -6,6 +6,7 @@ namespace ds
 	RBPhysicsComponent::RBPhysicsComponent(const RBPhysicsComponent& other)
 	{
 		data = other.data;
+		isCircle = other.isCircle;
 	}
 
 	RBPhysicsComponent::~RBPhysicsComponent()
@@ -29,7 +30,7 @@ namespace ds
 				body = owner->scene->engine->Get<PhysicsSystem>()->CreateBody(owner->transform.position, owner->transform.rotation, data, owner);
 			}
 			body->SetGravityScale(data.gravityScale);
-			body->SetLinearDamping(0.5f);
+			body->SetLinearDamping(0.0f);
 		}
 
 		owner->transform.position = PhysicsSystem::WorldToScreen(body->GetPosition());

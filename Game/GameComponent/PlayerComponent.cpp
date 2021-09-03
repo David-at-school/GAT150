@@ -20,30 +20,17 @@ void PlayerComponent::Create()
 
 void PlayerComponent::Update()
 {
-	Vector2 force = Vector2::zero;
-	if (owner->scene->engine->Get<InputSystem>()->GetKeyState(SDL_SCANCODE_A) == InputSystem::eKeyState::Held)
-	{
-		force.x -= speed;
-	}
-	if (owner->scene->engine->Get<InputSystem>()->GetKeyState(SDL_SCANCODE_D) == InputSystem::eKeyState::Held)
-	{
-		force.x += speed;
-	}
-	if (contacts.size() > 0 && owner->scene->engine->Get<InputSystem>()->GetKeyState(SDL_SCANCODE_SPACE) == InputSystem::eKeyState::Pressed)
-	{
-		force.y -= jump;
-	}
+ 	Vector2 mouseLocation = owner->scene->engine->Get<InputSystem>()->GetMousePosition();
+	Vector2 direction = mouseLocation - owner->transform.position;
+	owner->transform.rotation = direction.Angle() + ds::DegToRad(90);
 
-	PhysicsComponent* physicsComponent = owner->GetComponent<PhysicsComponent>();
-	assert(physicsComponent);
-
-	physicsComponent->ApplyForce(force);
-
-	SpriteAnimationComponent* spriteAnimationComponent = owner->GetComponent<SpriteAnimationComponent>();
-	assert(spriteAnimationComponent);
-	if (physicsComponent->velocity.x > 0.0f) spriteAnimationComponent->StartSequence("walk_right");
-	else if (physicsComponent->velocity.x < 0.0f) spriteAnimationComponent->StartSequence("walk_left");
-	else spriteAnimationComponent->StartSequence("idle");
+	if (owner->scene->engine->Get<InputSystem>()->GetKeyState(SDL_SCANCODE_SPACE) == InputSystem::eKeyState::Pressed)
+	{
+		auto bullet = ds::ObjectFactory::Instance().Create<ds::Actor>("Bullet");
+		bullet->transform = owner->transform;
+		bullet->transform.scale = 1;
+		owner->scene->AddActor(std::move(bullet));
+	}
 }
 
 void PlayerComponent::OnCollisionEnter(const Event& event)

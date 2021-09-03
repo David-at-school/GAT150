@@ -23,40 +23,13 @@
         ]
     },
     {
-		"type":"Actor",
-		"name":"Score",
-		"transform":{
-			"position":[
-				60,
-				20
-			]
-		},
-		"components":[
-			{
-				"type":"TextComponent",
-				"fontName":"fonts/spqr.ttf",
-				"fontSize":16,
-				"color":[
-					1,
-					1,
-					1
-				],
-				"text":"0000"
-			}
-		]
-	},
-    {
         "type":"Actor",
         "prototype":true,
         "name":"Player",
         "tag":"Player",
         "transform":{
-            "position":[
-               700,
-               800
-            ],
             "rotation":0,
-            "scale":[1,1]
+            "scale":[4,4]
         },
         "components":[
             {
@@ -67,80 +40,42 @@
             {
             	"type":"AudioComponent",
             	"soundName":"audio/music.mp3",
+                "volume":0.1,
             	"playOnAwake":true
             },
             {
-               "type":"SpriteAnimationComponent",
-               "textureName":"Images/characters.png",
-               "fps":30,
-               "numFramesX":18,
-               "numFramesY":11,
-               "startFrame":90,
-               "endFrame":95,
-               "sequences":[
-                    {
-                        "name":"idle",
-                        "sequence.fps":5,
-                        "sequence.startFrame":0,
-                        "sequence.endFrame":1
-                    },
-                    {
-                        "name":"walk_right",
-                        "sequence.fps":10,
-                        "sequence.startFrame":90,
-                        "sequence.endFrame":95
-                    },
-                    {
-                        "name":"walk_left",
-                        "sequence.fps":10,
-                        "sequence.startFrame":162,
-                        "sequence.endFrame":167
-                    }
-               ],
-               "defaultSequence":"idle"
-            },
-            {
-               "type":"RBPhysicsComponent",
-               "data.isDynamic":true,
-               "data.lockAngle":true,
-               "data.density":1,
-               "data.restitution":0.5,
-               "data.gravityScale":0.75,
-               "data.size":[32,32]
+               "type":"SpriteComponent",
+               "textureName":"Images/turret.png"
             }
         ]
     },
     {
         "type":"Actor",
-        "tag":"Enemy",
+        "prototype":true,
+        "name":"Bullet",
+        "tag":"Bullet",
         "transform":{
-            "position":[
-               1200,
-               300
-            ],
-            "rotation":0
+            "rotation":0,
+            "scale":[1,1]
         },
         "components":[
             {
-                "type":"EnemyComponent",
-                "speed":5
+                "type":"BulletComponent",
+                "speed":3
             },
             {
-               "type":"SpriteAnimationComponent",
-               "textureName":"Images/bat.png",
-               "fps":10,
-               "numFramesX":4,
-               "numFramesY":1
+               "type":"SpriteComponent",
+               "textureName":"Images/bullet.png"
             },
             {
                "type":"RBPhysicsComponent",
+               "isCircle":true,
                "data.isDynamic":true,
-               "data.isSensor":true,
+               "data.lockAngle":false,
                "data.density":1,
-               "data.lockAngle":true,
-               "data.restitution":0.1,
+               "data.restitution":1,
                "data.gravityScale":0,
-               "data.size":[32,32]
+               "data.size":[8,8]
             }
         ]
     },
@@ -182,8 +117,12 @@
 		"transform":{
 			"position":[
 				768,
-				815
+				880
 			],
+            "scale":[
+                1.92,
+                1
+            ],
         "rotation":0
         },
         "components":[
@@ -195,7 +134,7 @@
                "type":"RBPhysicsComponent",
                "data.isDynamic":false,
                "data.density":1,
-               "data.size":[1536,25]
+               "data.size":[1536,32]
             }
         ]
     },
@@ -205,8 +144,12 @@
 		"transform":{
 			"position":[
 				768,
-				0
+				-16
 			],
+            "scale":[
+                1.92,
+                1
+            ],
         "rotation":0
         },
         "components":[
@@ -218,7 +161,7 @@
                "type":"RBPhysicsComponent",
                "data.isDynamic":false,
                "data.density":1,
-               "data.size":[1536,25]
+               "data.size":[1536,32]
             }
         ]
     },
@@ -227,9 +170,13 @@
 		"tag":"Ground",
 		"transform":{
 			"position":[
-				0,
-				415
+				-16,
+				432
 			],
+            "scale":[
+                1.08,
+                1
+            ],
         "rotation":1.57079632679
         },
         "components":[
@@ -241,7 +188,7 @@
                "type":"RBPhysicsComponent",
                "data.isDynamic":false,
                "data.density":1,
-               "data.size":[25,1536]
+               "data.size":[32,864]
             }
         ]
     },
@@ -250,9 +197,13 @@
 		"tag":"Ground",
 		"transform":{
 			"position":[
-				1500,
-				415
+				1552,
+				432
 			],
+            "scale":[
+                1.08,
+                1
+            ],
         "rotation":1.57079632679
         },
         "components":[
@@ -264,14 +215,14 @@
                "type":"RBPhysicsComponent",
                "data.isDynamic":false,
                "data.density":1,
-               "data.size":[25,1536]
+               "data.size":[32,864]
             }
         ]
     },
     {
 		"type":"Actor",
         "name":"tile01",
-		"tag":"tile01",
+		"tag":"tile",
         "prototype":true,
 		"transform":{
 			"scale":[
@@ -297,7 +248,7 @@
     {
 		"type":"Actor",
         "name":"tile02",
-		"tag":"tile02",
+		"tag":"tile",
         "prototype":true,
 		"transform":{
 			"scale":[
@@ -316,38 +267,6 @@
                "type":"RBPhysicsComponent",
                "data.isDynamic":false,
                "data.density":1,
-               "data.size":[32,32]
-            }
-        ]
-    },
-    {
-        "type":"Actor",
-        "prototype":true,
-        "name":"brick",
-        "tag":"Brick",
-        "transform":{
-            "position":[
-               32,
-               32
-            ],
-            "rotation":0
-        },
-        "components":[
-            {
-                "type":"BrickComponent"
-            },
-            {
-               "type":"SpriteAnimationComponent",
-               "textureName":"Images/greenbrick.png",
-               "fps":8,
-               "numFramesX":4,
-               "numFramesY":1
-            },
-            {
-               "type":"RBPhysicsComponent",
-               "data.isDynamic":false,
-               "data.isSensor":true,
-               "data.lockAngle":true,
                "data.size":[32,32]
             }
         ]

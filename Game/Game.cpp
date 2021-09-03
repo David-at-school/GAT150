@@ -2,6 +2,7 @@
 #include "GameComponent/PlayerComponent.h"
 #include "GameComponent/EnemyComponent.h"
 #include "GameComponent/PickupComponent.h"
+#include "GameComponent/BulletComponent.h"
 
 void Game::Initialize()
 {
@@ -31,17 +32,7 @@ void Game::Initialize()
 	REGISTER_CLASS(PlayerComponent);
 	REGISTER_CLASS(EnemyComponent);
 	REGISTER_CLASS(PickupComponent);
-
-	/*for (size_t j = 0; j <= 18; j++)
-	{
-		for (size_t i = 0; i <= 46; i++)
-		{
-			auto actor = ds::ObjectFactory::Instance().Create<ds::Actor>("brick");
-			actor->transform.position.x += 32 * (i);
-			actor->transform.position.y += 32 * (j);
-			scene->AddActor(std::move(actor));
-		}
-	}*/
+	REGISTER_CLASS(BulletComponent);
 }
 
 void Game::Shutdown()
@@ -84,11 +75,7 @@ void Game::Update()
 	}
 
 	// update score
-	auto scoreActor = scene->FindActor("Score");
-	if (scoreActor)
-	{
-		scoreActor->GetComponent<ds::TextComponent>()->SetText(std::to_string(score));
-	}
+	
 
 	scene->Update(engine->time.deltaTime);
 }
@@ -149,11 +136,15 @@ void Game::StartGame()
 
 void Game::StartLevel()
 {
+	auto title = scene->FindActor("Score");
+	assert(title);
+	title->active = true;
+
 	stateTimer += engine->time.deltaTime;
 	if (stateTimer >= 1)
 	{
 		auto player = ds::ObjectFactory::Instance().Create<ds::Actor>("Player");
-		player->transform.position = { 768, 800 };
+		player->transform.position = { 768, 750 };
 		scene->AddActor(std::move(player));
 
 		spawnTimer = 2;
@@ -163,14 +154,10 @@ void Game::StartLevel()
 
 void Game::Level()
 {
-	spawnTimer -= engine->time.deltaTime;
-	if (spawnTimer <= 0)
+	auto scoreActor = scene->FindActor("Score");
+	if (scoreActor)
 	{
-		spawnTimer = ds::RandomRange(2, 4);
-
-		auto coin = ds::ObjectFactory::Instance().Create<ds::Actor>("coin");
-		coin->transform.position = ds::Vector2{ ds::RandomRange(50, 1486), ds::RandomRange(750, 800) };
-		scene->AddActor(std::move(coin));
+		scoreActor->GetComponent<ds::TextComponent>()->SetText(std::to_string(score));
 	}
 }
 

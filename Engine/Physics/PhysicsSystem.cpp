@@ -8,7 +8,7 @@ namespace ds
 {
     void PhysicsSystem::Startup()
     {
-        b2Vec2 gravity{ 0, 10 };
+        b2Vec2 gravity{ 0, 0 };
         world = std::make_unique<b2World>(gravity);
         contactListener = std::make_unique<ContactListener>();
         world->SetContactListener(contactListener.get());

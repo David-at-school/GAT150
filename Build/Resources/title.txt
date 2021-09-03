@@ -34,14 +34,14 @@
 		"components":[
 			{
 				"type":"TextComponent",
-				"fontName":"fonts/spqr.ttf",
+				"fontName":"fonts/CastteloSignature.ttf",
 				"fontSize":16,
 				"color":[
 					1,
 					1,
 					1
 				],
-				"text":"Hello World!"
+				"text":"0"
 			}
 		]
 	},
@@ -58,13 +58,13 @@
 			{
 				"type":"TextComponent",
 				"fontName":"fonts/spqr.ttf",
-				"fontSize":32,
+				"fontSize":64,
 				"color":[
-					1,
-					1,
-					1
+					0.5,
+					0,
+					0
 				],
-				"text":"This is a TITLE!"
+				"text":"Turret Break!"
 			}
 		]
 	}
